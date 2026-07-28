@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment demo — katoemmanganda.com</title>
+<link rel="stylesheet" href="payment-widget.css">
+<style>
+  body { font-family: -apple-system, sans-serif; max-width: 560px; margin: 4rem auto; padding: 0 1rem; color: #14231f; }
+  h1 { font-size: 1.4rem; }
+  .card { border: 1px solid #dcd7c9; border-radius: 12px; padding: 1.25rem; margin-top: 1.5rem; }
+  code { background: #f2f0e8; padding: 0.1rem 0.4rem; border-radius: 4px; }
+</style>
+</head>
+<body>
+  <h1>Sample product checkout</h1>
+  <p>This page shows the widget embedded exactly the way you'd drop it into an existing product or checkout page on katoemmanganda.com.</p>
+
+  <div class="card">
+    <h2 style="margin-top:0; font-size:1.05rem;">Example Product</h2>
+    <p style="color:#6b7570; font-size:0.9rem;">UGX 25,000</p>
+    <div id="buy-button"></div>
+  </div>
+
+  <script src="payment-widget.js"></script>
+  <script>
+    MarzPayWidget.mount('#buy-button', {
+      // Point this at YOUR backend from server/server.js — never at MarzPay directly.
+      backendUrl: 'http://localhost:4000',
+      productId: 'example-product-1',
+      description: 'Example Product',
+      buttonLabel: 'Pay now',
+      onSuccess: (result) => {
+        console.log('Payment confirmed:', result.reference);
+        // e.g. window.location.href = '/thank-you?ref=' + result.reference;
+      },
+      onFailure: (result) => {
+        console.log('Payment failed:', result.reference);
+      },
+    });
+  </script>
+</body>
+</html>
